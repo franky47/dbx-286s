@@ -45,4 +45,4 @@ pnpm check
 pnpm build
 ```
 
-Browser tests cover the panel-only layout, keyboard and drag input, typed values, reset, switches, narrow-screen access, pointer alignment with printed marks, and meter labels.
+Browser tests cover the panel-only layout, keyboard and drag input, typed values, reset, switches, narrow-screen access, pointer alignment with printed marks, meter labels, and clearance between labels, LEDs, meters, and section borders.

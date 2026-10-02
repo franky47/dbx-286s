@@ -47,6 +47,10 @@
 .unit-face .control-label {
   font-size: 10px;
 }
+.unit-face .control-label-emphasis {
+  font-size: 11px;
+  font-weight: 700;
+}
 .unit-face .control-unit {
   font-size: 9px;
 }
@@ -54,7 +58,8 @@
   font-size: 9px;
 }
 .unit-face .line-label {
-  font-size: 9px;
+  font-size: 10.5px;
+  font-weight: 700;
   fill: #ac4227;
 }
 .unit-face .dbx-logo {
@@ -114,6 +119,18 @@
 }
 .unit-scale .line-scale-label {
   fill: #a33c29;
+  font-size: 9px;
+  font-weight: 650;
+}
+.enhancer-scale text {
+  font-size: 9px;
+  font-weight: 700;
+}
+.enhancer-scale line {
+  stroke-width: 1.3;
+}
+.enhancer-scale line[data-major] {
+  stroke-width: 2;
 }
 .dial-indicator {
   transform: rotate(var(--knob-angle));
@@ -186,7 +203,7 @@
 }
 .led {
   position: absolute;
-  left: 92%;
+  left: 72%;
   top: 40%;
   width: 25%;
   aspect-ratio: 1;
@@ -231,6 +248,9 @@
   transform: translateX(-50%);
   white-space: nowrap;
   font-size: 0.4cqw;
+}
+.threshold-meter .meter-title {
+  font-size: 0.32cqw;
 }
 .meter-well {
   background: #292d23;

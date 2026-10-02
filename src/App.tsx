@@ -14,11 +14,11 @@ const positions: Record<ControlId, number> = {
   density: 743,
   frequency: 1045,
   deEss: 1149,
-  low: 1289,
-  high: 1394,
-  threshold: 1499,
-  ratio: 1601,
-  output: 1742,
+  low: 1292,
+  high: 1391,
+  threshold: 1505,
+  ratio: 1618,
+  output: 1756,
 }
 
 function DialCap() {
@@ -136,6 +136,7 @@ function PanelSwitch({
 }
 
 function Meter({
+  className = '',
   x,
   width,
   label,
@@ -147,10 +148,11 @@ function Meter({
   label?: string
   values: string[]
   colors: string[]
+  className?: string
 }) {
   return (
     <div
-      className="meter"
+      className={`meter ${className}`}
       style={{ left: `${x / 19.8}%`, width: `${width / 19.8}%` }}
       role="img"
       aria-label={`${label ?? 'Clip'} meter, no audio signal`}
@@ -192,7 +194,7 @@ function App() {
           ))}
           <PanelSwitch id="phantom" x={390} active={settings.phantom} onToggle={toggle} />
           <PanelSwitch id="highPass" x={466} active={settings.highPass} onToggle={toggle} />
-          <PanelSwitch id="bypass" x={546} active={settings.bypass} onToggle={toggle} />
+          <PanelSwitch id="bypass" x={540} active={settings.bypass} onToggle={toggle} />
           <Meter
             x={270}
             width={91}
@@ -215,8 +217,9 @@ function App() {
             colors={['#98d839', '#e94821']}
           />
           <Meter
-            x={1645}
-            width={43}
+            className="threshold-meter"
+            x={1655}
+            width={34}
             label="THRESHOLD"
             values={['−', '+']}
             colors={['#e94821', '#98d839']}

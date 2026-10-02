@@ -104,37 +104,37 @@ export function UnitFace() {
       <text x="228" y="132" className="control-unit">
         dB
       </text>
-      <text x="228" y="144" className="control-label">
+      <text x="228" y="142" className="control-label control-label-emphasis">
         GAIN
       </text>
-      <text x="228" y="156" className="line-label">
+      <text x="228" y="154" className="line-label">
         LINE
       </text>
-      <text x="390" y="82" className="switch-label">
+      <text x="402" y="82" className="switch-label">
         48V
       </text>
-      <text x="390" y="92" className="switch-label">
+      <text x="402" y="92" className="switch-label">
         PHANTOM
       </text>
-      <text x="390" y="102" className="switch-label">
+      <text x="402" y="102" className="switch-label">
         POWER
       </text>
-      <text x="466" y="92" className="switch-label">
+      <text x="478" y="92" className="switch-label">
         80Hz
       </text>
-      <text x="466" y="102" className="switch-label">
+      <text x="478" y="102" className="switch-label">
         HIGH-PASS
       </text>
-      <text x="546" y="93" className="switch-label">
+      <text x="552" y="93" className="switch-label">
         PROCESS
       </text>
-      <text x="546" y="104" className="switch-label">
+      <text x="552" y="104" className="switch-label">
         BYPASS
       </text>
-      <text x="641" y="144" className="control-label">
+      <text x="641" y="144" className="control-label control-label-emphasis">
         DRIVE
       </text>
-      <text x="743" y="144" className="control-label">
+      <text x="743" y="144" className="control-label control-label-emphasis">
         DENSITY
       </text>
       <text x="1045" y="132" className="control-unit">
@@ -146,31 +146,31 @@ export function UnitFace() {
       <text x="1149" y="144" className="control-label">
         THRESHOLD
       </text>
-      <text x="1289" y="144" className="control-label">
+      <text x="1292" y="144" className="control-label control-label-emphasis">
         LF DETAIL
       </text>
-      <text x="1394" y="144" className="control-label">
+      <text x="1391" y="144" className="control-label control-label-emphasis">
         HF DETAIL
       </text>
-      <text x="1499" y="132" className="control-unit">
+      <text x="1505" y="132" className="control-unit">
         dBu
       </text>
-      <text x="1499" y="144" className="control-label">
+      <text x="1505" y="144" className="control-label">
         THRESHOLD
       </text>
-      <text x="1601" y="144" className="control-label">
+      <text x="1618" y="144" className="control-label">
         RATIO
       </text>
-      <text x="1742" y="132" className="control-unit">
+      <text x="1756" y="132" className="control-unit">
         dB
       </text>
-      <text x="1742" y="144" className="control-label">
+      <text x="1756" y="144" className="control-label">
         GAIN
       </text>
       <Screw x={115} y={42} />
       <Screw x={115} y={140} />
-      <Screw x={990} y={18} />
-      <Screw x={990} y={163} />
+      <Screw x={987.5} y={18} />
+      <Screw x={987.5} y={163} />
       <Screw x={1870} y={42} />
       <Screw x={1870} y={140} />
     </svg>

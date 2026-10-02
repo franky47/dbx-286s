@@ -6,9 +6,12 @@ function point(position: number, radius: number) {
   return { x: 50 + radius * Math.sin(radians), y: 50 - radius * Math.cos(radians) }
 }
 
+const enhancerAnchors: Record<number, 'start' | 'end'> = { 0.2: 'start', 0.8: 'end' }
+
 export function UnitScale({ id }: { id: ControlId }) {
+  const enhancer = ['low', 'high'].includes(id)
   return (
-    <g className="unit-scale">
+    <g className={`unit-scale ${enhancer ? 'enhancer-scale' : ''}`}>
       {Array.from({ length: 21 }, (_, index) => {
         const major = index % 5 === 0
         const inner = point(index / 20, 30)
@@ -20,6 +23,7 @@ export function UnitScale({ id }: { id: ControlId }) {
             y1={inner.y}
             x2={outer.x}
             y2={outer.y}
+            data-major={major ? '' : undefined}
             strokeWidth={major ? 1.7 : 1.1}
             strokeLinecap="round"
           />
@@ -30,7 +34,7 @@ export function UnitScale({ id }: { id: ControlId }) {
           key={mark.label}
           {...point(mark.position, 47)}
           dominantBaseline="central"
-          textAnchor="middle"
+          textAnchor={enhancer ? (enhancerAnchors[mark.position] ?? 'middle') : 'middle'}
           data-slot="unit-scale-label"
         >
           {mark.label}

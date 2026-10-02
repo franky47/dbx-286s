@@ -206,7 +206,7 @@ function App() {
     <main className="unit-stage">
       <ThemeToggle />
       <h1 className="sr-only">DBX 286s mic preamp / processor</h1>
-      <div className="rack-scroll" role="region" aria-label="DBX286S front panel" tabIndex={0}>
+      <div className="rack-scroll" role="region" aria-label="DBX286S front panel">
         <div className="rack" data-bypassed={settings.bypass}>
           <UnitFace />
           {(Object.keys(controls) as ControlId[]).map((id) => (

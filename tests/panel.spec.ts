@@ -15,6 +15,20 @@ test('the unit has ten audiocn knobs and no extra page sections', async ({ page 
   await expect(page.getByText('Your voice.', { exact: false })).toHaveCount(0)
 })
 
+test('tab navigation skips the panel wrapper', async ({ page }) => {
+  const gain = page.getByRole('slider', { name: 'Mic gain', exact: true })
+  const theme = page.getByRole('button', { name: 'Choose theme', exact: true })
+
+  for (const width of [1280, 390]) {
+    await page.setViewportSize({ width, height: 844 })
+    await gain.focus()
+    await gain.press('Shift+Tab')
+    await expect(theme).toBeFocused()
+    await theme.press('Tab')
+    await expect(gain).toBeFocused()
+  }
+})
+
 test('knobs support keys, bounds, direct entry and reset', async ({ page }) => {
   const gain = page.getByRole('slider', { name: 'Mic gain', exact: true })
   await gain.focus()

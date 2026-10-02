@@ -4,8 +4,6 @@ test('keyboard focus turns the knob edge red at twice its normal width', async (
   await page.goto('/')
   await page.keyboard.press('Tab')
   await expect(page.getByRole('button', { name: 'Choose theme' })).toBeFocused()
-  await page.keyboard.press('Tab')
-  await expect(page.getByRole('region', { name: 'DBX286S front panel' })).toBeFocused()
 
   for (const dial of await page.getByRole('slider').all()) {
     const edge = dial.locator('circle[stroke="#73786a"]')

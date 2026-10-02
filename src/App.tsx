@@ -203,6 +203,7 @@ function App() {
             colors={['#98d839', '#98d839', '#e8d43c', '#e94821']}
           />
           <Meter
+            className="processor-meter"
             x={791}
             width={176}
             label="GAIN REDUCTION dB"
@@ -210,6 +211,7 @@ function App() {
             colors={Array(8).fill('#e94821')}
           />
           <Meter
+            className="processor-meter"
             x={1189}
             width={42}
             label="dB"
@@ -217,7 +219,7 @@ function App() {
             colors={['#98d839', '#e94821']}
           />
           <Meter
-            className="threshold-meter"
+            className="threshold-meter processor-meter"
             x={1655}
             width={34}
             label="THRESHOLD"

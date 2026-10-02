@@ -131,34 +131,34 @@ export function UnitFace() {
       <text x="552" y="104" className="switch-label">
         BYPASS
       </text>
-      <text x="641" y="144" className="control-label control-label-emphasis">
+      <text x="641" y="144" className="control-label control-label-emphasis processor-label">
         DRIVE
       </text>
-      <text x="743" y="144" className="control-label control-label-emphasis">
+      <text x="743" y="144" className="control-label control-label-emphasis processor-label">
         DENSITY
       </text>
-      <text x="1045" y="132" className="control-unit">
+      <text x="1045" y="132" className="control-unit processor-label">
         Hz
       </text>
-      <text x="1045" y="144" className="control-label">
+      <text x="1045" y="144" className="control-label processor-label">
         FREQUENCY
       </text>
-      <text x="1149" y="144" className="control-label">
+      <text x="1149" y="144" className="control-label processor-label">
         THRESHOLD
       </text>
-      <text x="1292" y="144" className="control-label control-label-emphasis">
+      <text x="1292" y="144" className="control-label control-label-emphasis processor-label">
         LF DETAIL
       </text>
-      <text x="1391" y="144" className="control-label control-label-emphasis">
+      <text x="1391" y="144" className="control-label control-label-emphasis processor-label">
         HF DETAIL
       </text>
-      <text x="1505" y="132" className="control-unit">
+      <text x="1505" y="132" className="control-unit processor-label">
         dBu
       </text>
-      <text x="1505" y="144" className="control-label">
+      <text x="1505" y="144" className="control-label processor-label">
         THRESHOLD
       </text>
-      <text x="1618" y="144" className="control-label">
+      <text x="1618" y="144" className="control-label processor-label">
         RATIO
       </text>
       <text x="1756" y="132" className="control-unit">

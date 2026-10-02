@@ -75,6 +75,44 @@ test('switches update state and bypass keeps knob settings', async ({ page }) =>
   )
 })
 
+test('bypass dims processor labels, units and meters without dimming section groups', async ({
+  page,
+}) => {
+  const labels = page.locator('.unit-face .control-label').filter({ hasNotText: /^GAIN$/ })
+  const units = page.locator('.unit-face .control-unit').filter({ hasText: /^(Hz|dBu)$/ })
+  const meters = page.getByRole('img', { name: /^(GAIN REDUCTION dB|dB|THRESHOLD) meter/ })
+  await expect(labels).toHaveCount(8)
+  await expect(units).toHaveCount(2)
+  await expect(meters).toHaveCount(3)
+
+  const dimmed = labels.or(units).or(meters).or(page.locator('.processor-knob'))
+  const unchanged = page
+    .locator(
+      '.rack, .unit-face, .unit-face > g, .section-label, .panel-switch, .panel-knob:not(.processor-knob)',
+    )
+    .or(page.locator('.unit-face .control-label').filter({ hasText: /^GAIN$/ }))
+    .or(page.locator('.unit-face .control-unit').filter({ hasText: /^dB$/ }))
+    .or(page.getByRole('img', { name: /^(LEVEL|Clip)/ }))
+
+  const bypass = page.getByRole('button', { name: 'Process bypass', exact: true })
+  for (const opacity of ['0.5', '1']) {
+    await bypass.click()
+    for (const element of await dimmed.all()) {
+      await expect(element).toHaveCSS('opacity', opacity)
+    }
+    for (const element of await unchanged.all()) {
+      await expect(element).toHaveCSS('opacity', '1')
+    }
+    if (opacity === '0.5') {
+      await page.getByRole('slider', { name: 'Drive', exact: true }).press('ArrowUp')
+      await expect(page.getByRole('slider', { name: 'Drive', exact: true })).toHaveAttribute(
+        'aria-valuenow',
+        '3.1',
+      )
+    }
+  }
+})
+
 test('mobile keeps the rack inside a scroll area and output is reachable', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(

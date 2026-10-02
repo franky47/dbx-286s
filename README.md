@@ -2,7 +2,7 @@
 
 An interactive front-panel mock-up using [audiocn knobs](https://www.audiocn.dev/docs/components/knob). Only the unit appears on screen.
 
-The ten knobs and the phantom power, high-pass filter, and process bypass switches update local React state. Bypass dims the four processor sections but keeps their values and lets you adjust them. Reloading restores the starting values.
+The ten knobs and the phantom power, high-pass filter, and process bypass switches update local React state. Bypass dims the processor knobs, their labels and units, and the compressor, de-esser, and expander/gate meters. Section borders and titles stay unchanged. You can still adjust the knobs, and bypass keeps their values. Reloading restores the starting values.
 
 This demo does not process audio, access a microphone, or control hardware. Meter LEDs stay off. Starting values are examples, not official dbx presets.
 

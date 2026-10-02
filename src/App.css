@@ -162,7 +162,9 @@
   visibility: visible;
   min-width: 8ch;
 }
-.rack[data-bypassed='true'] .processor-knob {
+.rack[data-bypassed='true'] .processor-knob,
+.rack[data-bypassed='true'] .processor-label,
+.rack[data-bypassed='true'] .processor-meter {
   opacity: 0.5;
 }
 .rack[data-bypassed='true'] .processor-knob:focus-within,

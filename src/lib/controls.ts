@@ -38,8 +38,8 @@ export const defaultSettings: Settings = {
   bypass: false,
 }
 
-const decimal = (value: number) => String(Number(value.toFixed(2)))
-const signed = (value: number) => `${value > 0 ? '+' : ''}${decimal(value)}`
+const decimal = (value: number) => value.toFixed(2)
+const signed = (value: number) => `${value > 0 ? '+' : ''}${value.toFixed(1)}`
 const offAtZero = (value: number) => (value === 0 ? 'OFF' : decimal(value))
 
 const valueFormats: Record<ControlId, (value: number) => string> = {
@@ -50,7 +50,7 @@ const valueFormats: Record<ControlId, (value: number) => string> = {
   deEss: offAtZero,
   low: offAtZero,
   high: offAtZero,
-  threshold: (value) => (value <= -60 ? 'OFF' : `${decimal(value)} dBu`),
+  threshold: (value) => (value <= -60 ? 'OFF' : `${value.toFixed(1)} dBu`),
   ratio: (value) => (value === 1 ? 'MIN' : `${decimal(value)}:1`),
   output: (value) => `${signed(value)} dB`,
 }

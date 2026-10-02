@@ -143,7 +143,9 @@
   top: 104%;
   left: 50%;
   transform: translateX(-50%);
+  width: calc(var(--knob-value-width) + 12px);
   padding: 3px 6px;
+  text-align: right;
   border-radius: 2px;
   background: #252a20;
   color: #f3f4e9;
@@ -160,7 +162,6 @@
 }
 .panel-knob [data-slot='knob-value-input'] {
   visibility: visible;
-  min-width: 8ch;
 }
 .rack[data-bypassed='true'] .processor-knob,
 .rack[data-bypassed='true'] .processor-label,

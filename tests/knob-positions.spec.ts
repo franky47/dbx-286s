@@ -94,10 +94,10 @@ test('ratio positions below 1.5 keep their value when confirmed without edits', 
     await dial.press('ArrowUp')
     const value = String(Number((1 + index * 0.05).toFixed(2)))
     await expect(dial).toHaveAttribute('aria-valuenow', value)
-    await expect(dial).toHaveAttribute('aria-valuetext', `${value}:1`)
+    await expect(dial).toHaveAttribute('aria-valuetext', `${Number(value).toFixed(2)}:1`)
     await dial.press('Enter')
     const input = page.getByRole('textbox', { name: 'Value', exact: true })
-    await expect(input).toHaveValue(`${value}:1`)
+    await expect(input).toHaveValue(`${Number(value).toFixed(2)}:1`)
     await input.press('Enter')
     await expect(dial).toHaveAttribute('aria-valuenow', value)
   }

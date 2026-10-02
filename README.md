@@ -18,13 +18,15 @@ pnpm dev
 - Drag a knob up or down. Hold Shift to slow the drag.
 - Tab to a knob, then use arrow keys or the mouse wheel.
 - Use Home and End for the limits. Arrows, Alt+arrow, and the wheel move one position. Shift+arrow and Page Up/Down move ten positions.
-- Hover or focus a knob to see its value. Press Enter on the knob or double-click its value to type a number. Enter applies it; Escape cancels.
+- Hover or focus a knob to see its value. Each readout and value editor fits that control's widest value with 6px side padding. Text aligns to the right, so units stay in place as values change. Press Enter on the knob or double-click its value to type a number. Enter applies it; Escape cancels.
 - Double-click a dial or Alt+click to restore its starting value.
 - On a narrow screen, scroll the unit sideways. Keyboard focus also scrolls controls into view.
 
 All knobs have 41 fixed positions, including both limits. Positions are 7.5 degrees apart across the 300-degree sweep. Each knob keeps its printed marks and maps positions through its scale, so value steps can vary. Input gain uses 1.5 dB steps from 0 to +60 dB. Typed values snap to the nearest position. Shift and Alt cannot select values between positions.
 
-Starting and reset values sit on fixed positions. Input gain starts at +34.5 dB, frequency at 4.4 kHz, and gate threshold at -36 dBu.
+Starting and reset values sit on fixed positions. Input gain starts at +34.5 dB, frequency at 4.40 kHz, and gate threshold at -36.0 dBu.
+
+Readouts use one decimal place for input gain, output gain, and gate threshold. All other controls use two decimal places to show their smallest steps. OFF and MIN stay as text.
 
 ## Component source
 

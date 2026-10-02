@@ -1,6 +1,9 @@
 {
   "$schema": "./node_modules/fallow/schema.json",
-  // Keep the shadcn setup until UI components use it.
-  "ignoreFindings": ["src/lib/utils.ts"],
-  "ignoreDependencies": ["@base-ui/react", "class-variance-authority", "lucide-react"],
+  // Keep the copied audiocn API intact for updates from its registry.
+  "ignoreFindings": ["src/components/ui/knob.tsx", "src/hooks/use-audio-*.tsx", "src/lib/audio/**"],
+  "health": {
+    "ignore": ["src/components/ui/knob.tsx", "src/hooks/use-audio-*.tsx", "src/lib/audio/**"],
+  },
+  "ignoreDependencies": ["@base-ui/react", "lucide-react"],
 }

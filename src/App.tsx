@@ -1,101 +1,230 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+import { useId, useState } from 'react'
+import type { CSSProperties } from 'react'
+import { Knob, KnobDial, KnobLabel, KnobValue, parseKnobValue } from '@/components/ui/knob'
+import { UnitFace } from '@/components/unit-face'
+import { controls, defaultSettings, formatValue } from '@/lib/controls'
+import { graduationTaper } from '@/lib/graduations'
+import { UnitScale } from '@/components/unit-scale'
+import type { ControlId, SwitchId } from '@/lib/controls'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const positions: Record<ControlId, number> = {
+  gain: 228,
+  drive: 641,
+  density: 743,
+  frequency: 1045,
+  deEss: 1149,
+  low: 1289,
+  high: 1394,
+  threshold: 1499,
+  ratio: 1601,
+  output: 1742,
+}
 
+function DialCap() {
+  const id = `dial-${useId().replaceAll(':', '')}`
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button type="button" className="counter" onClick={() => setCount((count) => count + 1)}>
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg className="button-icon" role="presentation" aria-hidden="true">
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg className="button-icon" role="presentation" aria-hidden="true">
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg className="button-icon" role="presentation" aria-hidden="true">
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg className="button-icon" role="presentation" aria-hidden="true">
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+      <defs>
+        <linearGradient id={id} x1="0" y1="0" x2=".8" y2="1">
+          <stop stopColor="#56584e" />
+          <stop offset=".5" stopColor="#292c25" />
+          <stop offset="1" stopColor="#161913" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="52" r="29" fill="#000" opacity=".25" />
+      <circle cx="50" cy="50" r="29" fill="#22261e" stroke="#73786a" strokeWidth="1.2" />
+      <circle cx="50" cy="50" r="25" fill={`url(#${id})`} stroke="#151911" strokeWidth="1" />
+      <circle
+        cx="50"
+        cy="50"
+        r="22.5"
+        fill="none"
+        stroke="#fff"
+        strokeOpacity=".07"
+        strokeWidth=".7"
+      />
+      <line
+        className="dial-indicator"
+        x1="50"
+        y1="27"
+        x2="50"
+        y2="43"
+        stroke="#e7e8d9"
+        strokeWidth="5"
+        strokeLinecap="round"
+      />
     </>
+  )
+}
+
+function parseValue(id: ControlId, text: string) {
+  const minimum = controls[id].min
+  if (text.trim().toUpperCase() === formatValue(id, minimum).toUpperCase()) return minimum
+  return parseKnobValue(text)
+}
+
+function PanelKnob({
+  id,
+  value,
+  onChange,
+}: {
+  id: ControlId
+  value: number
+  onChange: (value: number) => void
+}) {
+  const control = controls[id]
+  const processor = !['gain', 'output'].includes(id)
+  return (
+    <Knob
+      className={`panel-knob ${processor ? 'processor-knob' : ''}`}
+      style={{ left: `${(positions[id] - 50) / 19.8}%` }}
+      min={control.min}
+      max={control.max}
+      step={control.step}
+      fineStep={control.step / 10}
+      largeStep={control.step * 10}
+      value={value}
+      resetValue={defaultSettings.values[id]}
+      arc={300}
+      taper={graduationTaper(id)}
+      origin={id === 'output' ? 0 : control.min}
+      format={(next) => formatValue(id, next)}
+      parse={(text) => parseValue(id, text)}
+      onValueChange={onChange}
+      allowWheel
+    >
+      <KnobLabel className="sr-only">{control.label}</KnobLabel>
+      <KnobDial>
+        <UnitScale id={id} />
+        <DialCap />
+      </KnobDial>
+      <KnobValue className="value-readout" />
+    </Knob>
+  )
+}
+
+function PanelSwitch({
+  id,
+  x,
+  active,
+  onToggle,
+}: {
+  id: SwitchId
+  x: number
+  active: boolean
+  onToggle: (id: SwitchId) => void
+}) {
+  const names = {
+    phantom: '48V phantom power',
+    highPass: '80 Hz high-pass filter',
+    bypass: 'Process bypass',
+  }
+  return (
+    <button
+      type="button"
+      className={`panel-switch switch-${id}`}
+      style={{ left: `${(x - 13) / 19.8}%` }}
+      aria-label={names[id]}
+      aria-pressed={active}
+      onClick={() => onToggle(id)}
+    >
+      <span className="switch-key" />
+      <span className="led" data-lit={active} />
+    </button>
+  )
+}
+
+function Meter({
+  x,
+  width,
+  label,
+  values,
+  colors,
+}: {
+  x: number
+  width: number
+  label?: string
+  values: string[]
+  colors: string[]
+}) {
+  return (
+    <div
+      className="meter"
+      style={{ left: `${x / 19.8}%`, width: `${width / 19.8}%` }}
+      role="img"
+      aria-label={`${label ?? 'Clip'} meter, no audio signal`}
+    >
+      {label && <span className="meter-title">{label}</span>}
+      <div className="meter-well">
+        {values.map((value, index) => (
+          <span className="meter-segment" key={value}>
+            <span>{value}</span>
+            <i style={{ '--led-color': colors[index] } as CSSProperties} />
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function App() {
+  const [settings, setSettings] = useState(defaultSettings)
+  function changeControl(id: ControlId, value: number) {
+    setSettings((current) => ({ ...current, values: { ...current.values, [id]: value } }))
+  }
+  function toggle(id: SwitchId) {
+    setSettings((current) => ({ ...current, [id]: !current[id] }))
+  }
+  return (
+    <main className="unit-stage">
+      <h1 className="sr-only">DBX 286s mic preamp / processor</h1>
+      <div className="rack-scroll" role="region" aria-label="DBX286S front panel" tabIndex={0}>
+        <div className="rack" data-bypassed={settings.bypass}>
+          <UnitFace />
+          {(Object.keys(controls) as ControlId[]).map((id) => (
+            <PanelKnob
+              key={id}
+              id={id}
+              value={settings.values[id]}
+              onChange={(value) => changeControl(id, value)}
+            />
+          ))}
+          <PanelSwitch id="phantom" x={390} active={settings.phantom} onToggle={toggle} />
+          <PanelSwitch id="highPass" x={466} active={settings.highPass} onToggle={toggle} />
+          <PanelSwitch id="bypass" x={546} active={settings.bypass} onToggle={toggle} />
+          <Meter
+            x={270}
+            width={91}
+            label="LEVEL (dBu)"
+            values={['-20', '-10', '0', 'CLIP']}
+            colors={['#98d839', '#98d839', '#e8d43c', '#e94821']}
+          />
+          <Meter
+            x={791}
+            width={176}
+            label="GAIN REDUCTION dB"
+            values={['30', '25', '20', '15', '12', '9', '6', '3']}
+            colors={Array(8).fill('#e94821')}
+          />
+          <Meter
+            x={1189}
+            width={42}
+            label="dB"
+            values={['1', '6']}
+            colors={['#98d839', '#e94821']}
+          />
+          <Meter
+            x={1645}
+            width={43}
+            label="THRESHOLD"
+            values={['−', '+']}
+            colors={['#e94821', '#98d839']}
+          />
+          <Meter x={1790} width={25} values={['CLIP']} colors={['#e94821']} />
+        </div>
+      </div>
+    </main>
   )
 }
 

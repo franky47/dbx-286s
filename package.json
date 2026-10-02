@@ -11,6 +11,7 @@
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
     "typecheck": "tsc -b",
+    "test": "playwright test",
     "dead-code": "fallow dead-code --fail-on-issues",
     "metrics": "fallow health",
     "quality": "fallow --fail-on-issues",
@@ -19,7 +20,8 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
-    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/ibm-plex-sans": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.4.0",
     "lucide-react": "^1.49.0",
@@ -30,6 +32,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",
+    "@playwright/test": "^1.63.0",
     "@rolldown/plugin-babel": "^0.2.3",
     "@tailwindcss/vite": "^4.3.3",
     "@types/babel__core": "^7.20.5",

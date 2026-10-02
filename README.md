@@ -67,9 +67,9 @@ Control changes update the current URL without adding browser history entries. M
 | Gate ratio             | `gateratio`   |
 | Output gain            | `outgain`     |
 
-Switches accept `on` or `off`. `bypass=on` bypasses processing. Invalid switch values use off. Knob values use numbers in the control's units, with frequency in Hz. Invalid or out-of-range numbers use the starting value. Knobs display the nearest fixed position.
+Switches accept `on` or `off`. `bypass=on` bypasses processing. Invalid switch values use off. Knob values use numbers in the control's units. Frequency URLs use kHz with a `k` suffix, such as `deessfreq=6.4k`. Plain numbers mean Hz, so `800` and `0.8k` both mean 800 Hz. Invalid or out-of-range numbers use the starting value. Knobs display the nearest fixed position.
 
-For example, `/?ingain=42&48v=on&hp=on&deessfreq=6400&outgain=0.5` loads those settings and uses defaults for the other controls.
+For example, `/?ingain=42&48v=on&hp=on&deessfreq=6.4k&outgain=0.5` loads those settings and uses defaults for the other controls.
 
 `src/lib/query-state.ts` defines the parsers and `urlKeys` mappings. Its custom `on`/`off` parser extends `parseAsBoolean` with an off default.
 

@@ -1,5 +1,73 @@
 import { expect, test } from '@playwright/test'
 import { settingsParsers } from '../src/lib/query-state'
+import { graduationTaper } from '../src/lib/graduations'
+
+const frequencyValues = [
+  800, 820, 840, 860, 880, 900, 920, 940, 960, 980, 1000, 1300, 1600, 1900, 2200, 2500, 2800, 3100,
+  3400, 3700, 4000, 4400, 4800, 5200, 5600, 6000, 6400, 6800, 7200, 7600, 8000, 8200, 8400, 8600,
+  8800, 9000, 9200, 9400, 9600, 9800, 10000,
+]
+
+test('frequency URLs preserve all 41 positions exactly in Hz and kHz', () => {
+  const parser = settingsParsers.frequency
+  const taper = graduationTaper('frequency')
+  for (const [index, hz] of frequencyValues.entries()) {
+    const value = Number(taper.toValue(index / 40).toFixed(6))
+    const encoded = `${hz / 1000}k`
+    expect(value).toBe(hz)
+    expect(parser.serialize(value)).toBe(encoded)
+    expect(parser.parse(encoded)).toBe(hz)
+    expect(parser.parse(String(hz))).toBe(hz)
+    expect(parser.serialize(parser.parse(encoded)!)).toBe(encoded)
+  }
+  expect(parser.defaultValue).toBe(7200)
+})
+
+test('frequency URLs reject malformed and out-of-range kHz values', () => {
+  for (const value of [
+    'k',
+    '0.79k',
+    '10.01k',
+    '-0.8k',
+    'Infinityk',
+    'NaNk',
+    '6.4kk',
+    '6.4kHz',
+    '6.4kjunk',
+    '6,4k',
+    '0x4k',
+    '1e0k',
+  ]) {
+    expect(settingsParsers.frequency.parse(value), value).toBeNull()
+  }
+  expect(settingsParsers.drive.parse('1k')).toBeNull()
+})
+
+for (const value of ['800', '0.8k', '6400', '6.4k', '10000', '10k']) {
+  test(`frequency URL ${value} loads in Hz and survives reload`, async ({ page }) => {
+    const hz = value.endsWith('k') ? Number(value.slice(0, -1)) * 1000 : Number(value)
+    await page.goto(`/?deessfreq=${value}`)
+    const dial = page.getByRole('slider', { name: 'Frequency', exact: true })
+    await expect(dial).toHaveAttribute('aria-valuenow', String(hz))
+    await page.reload()
+    await expect(dial).toHaveAttribute('aria-valuenow', String(hz))
+  })
+}
+
+test('frequency knob writes short kHz URLs at every position', async ({ page }) => {
+  await page.goto('/')
+  const dial = page.getByRole('slider', { name: 'Frequency', exact: true })
+  await dial.press('Home')
+  for (const hz of frequencyValues) {
+    await expect(dial).toHaveAttribute('aria-valuenow', String(hz))
+    await expect(page).toHaveURL((url) =>
+      hz === 7200
+        ? !url.searchParams.has('deessfreq')
+        : url.searchParams.get('deessfreq') === `${hz / 1000}k`,
+    )
+    await dial.press('ArrowUp')
+  }
+})
 
 test('on/off parser uses booleans with an off default', () => {
   const parser = settingsParsers.phantom
@@ -73,7 +141,9 @@ test('knobs write mapped URL keys and reset clears defaults', async ({ page }) =
     await page.getByRole('slider', { name, exact: true }).press('End')
   }
   await expect(page).toHaveURL((url) =>
-    knobs.every(({ key, max }) => url.searchParams.get(key) === max),
+    knobs.every(
+      ({ key, max }) => url.searchParams.get(key) === (key === 'deessfreq' ? '10k' : max),
+    ),
   )
   await page.reload()
   for (const { name, max, initial } of knobs) {

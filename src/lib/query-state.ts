@@ -16,9 +16,12 @@ function parseAsControl(id: ControlId) {
     ...parseAsFloat,
     parse: (query) => {
       if (query.trim() === '') return null
-      const value = Number(query)
+      const text = query.trim()
+      const isKilohertz = id === 'frequency' && /^\d+(?:\.\d+)?k$/.test(text)
+      const value = isKilohertz ? Number(text.slice(0, -1)) * 1000 : Number(text)
       return Number.isFinite(value) && value >= min && value <= max ? value : null
     },
+    serialize: (value) => (id === 'frequency' ? `${value / 1000}k` : parseAsFloat.serialize(value)),
   }).withDefault(defaultSettings.values[id])
 }
 

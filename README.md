@@ -1,5 +1,7 @@
 # DBX 286s
 
+![DBX 286s front panel in dark mode](public/og-image.png)
+
 An interactive front-panel mock-up using [audiocn knobs](https://www.audiocn.dev/docs/components/knob). A theme button sits above the unit.
 
 The ten knobs and the phantom power, high-pass filter, and process bypass switches use [nuqs](https://nuqs.dev) to store settings in the URL. Copy the URL to share a preset. Reloading keeps its settings. Bypass dims the processor knobs, their labels and units, and the compressor, de-esser, and expander/gate meters. Section borders and titles stay unchanged. You can still adjust the knobs, and bypass keeps their values.
@@ -92,6 +94,17 @@ The app formats the copied files with Oxfmt. The local `Knob` adds an optional `
 `src/lib/controls.ts` defines the starting values. `src/lib/graduations.ts` records the printed values from the close-up photos in `unit/`. All knobs use a 300-degree sweep. The frequency, gate, ratio, and output controls use linear interpolation between printed marks, so the pointer aligns with each label.
 
 OFF uses -60 for the gate. The ratio control uses 1 as an internal MIN marker, not a claim that the hardware has a 1:1 ratio. Only the minimum position shows MIN; higher positions show numeric ratios. You can type OFF or MIN where the panel uses those labels. These are visual approximations, not measured circuit curves. The [dbx product page](https://dbxpro.com/en-US/products/286s) lists the hardware specs.
+
+## Refresh the preview image
+
+Social previews and this README use `public/og-image.png`, a 1200 by 630 screenshot of the unit in dark mode with the starting settings. After a panel change, update it with:
+
+```sh
+pnpm exec playwright install chromium
+pnpm screenshot:og
+```
+
+The command starts a local server and closes it after the capture. `index.html` uses the public image URL at `https://dbx-286s.francoisbest.com/og-image.png`.
 
 ## Check
 

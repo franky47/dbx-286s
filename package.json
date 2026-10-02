@@ -16,7 +16,8 @@
     "metrics": "fallow health",
     "quality": "fallow --fail-on-issues",
     "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm quality",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "screenshot:og": "node scripts/screenshot-og.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

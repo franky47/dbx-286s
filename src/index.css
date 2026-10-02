@@ -5,10 +5,12 @@
 @import '@fontsource/ibm-plex-mono/400.css';
 @import '@fontsource/ibm-plex-mono/500.css';
 
+@custom-variant dark (&:is(.dark *));
+
 :root {
   font-family: 'IBM Plex Sans Variable', sans-serif;
-  color: #292b27;
-  background: #f4f3ee;
+  color: var(--foreground);
+  background: var(--background);
   color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -23,6 +25,20 @@
   --border: #d7d7cc;
   --ring: #b53624;
   --radius: 0.25rem;
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --accent: var(--muted);
+  --accent-foreground: var(--foreground);
+}
+
+:root.dark {
+  color-scheme: dark;
+  --background: #101011;
+  --foreground: #f4f3ee;
+  --muted: #30312c;
+  --muted-foreground: #aaa99f;
+  --input: #55564d;
+  --border: #414239;
 }
 
 @theme inline {
@@ -36,6 +52,10 @@
   --color-input: var(--input);
   --color-border: var(--border);
   --color-ring: var(--ring);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
 }
 
 * {

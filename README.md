@@ -1,6 +1,6 @@
 # DBX 286s
 
-An interactive front-panel mock-up using [audiocn knobs](https://www.audiocn.dev/docs/components/knob). Only the unit appears on screen.
+An interactive front-panel mock-up using [audiocn knobs](https://www.audiocn.dev/docs/components/knob). A theme button sits above the unit.
 
 The ten knobs and the phantom power, high-pass filter, and process bypass switches use [nuqs](https://nuqs.dev) to store settings in the URL. Copy the URL to share a preset. Reloading keeps its settings. Bypass dims the processor knobs, their labels and units, and the compressor, de-esser, and expander/gate meters. Section borders and titles stay unchanged. You can still adjust the knobs, and bypass keeps their values.
 
@@ -12,6 +12,10 @@ This demo does not process audio, access a microphone, or control hardware. Mete
 pnpm install
 pnpm dev
 ```
+
+## Choose a theme
+
+Use the icon button in the top-right corner to choose Light, Dark, or System. System follows your device's theme and is the default. Your browser saves your choice. The page background changes, but the rack panel keeps its colors. Theme choices do not change shared preset URLs.
 
 ## Use the controls
 
@@ -90,4 +94,4 @@ pnpm check
 pnpm build
 ```
 
-Browser tests cover the panel-only layout, keyboard and drag input, typed values, reset, switches, URL settings and reloads, browser navigation, invalid query values, narrow-screen access, pointer alignment with printed marks, meter labels, and clearance between labels, LEDs, meters, and section borders.
+Browser tests cover theme choices, saved themes, system theme changes, the panel layout, keyboard and drag input, typed values, reset, switches, URL settings and reloads, browser navigation, invalid query values, narrow-screen access, pointer alignment with printed marks, meter labels, and clearance between labels, LEDs, meters, and section borders.

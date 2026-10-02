@@ -4,7 +4,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/')
 })
 
-test('only the unit is shown, with ten audiocn knobs', async ({ page }) => {
+test('the unit has ten audiocn knobs and no extra page sections', async ({ page }) => {
   await expect(page.getByRole('slider')).toHaveCount(10)
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
     'DBX 286s mic preamp / processor',

@@ -7,6 +7,7 @@ import { controls, defaultSettings, formatValue } from '@/lib/controls'
 import { graduationTaper } from '@/lib/graduations'
 import { settingsParsers, settingsUrlKeys } from '@/lib/query-state'
 import { UnitScale } from '@/components/unit-scale'
+import { ThemeToggle } from '@/components/theme-toggle'
 import type { ControlId, SwitchId } from '@/lib/controls'
 import './App.css'
 
@@ -203,6 +204,7 @@ function App() {
   }
   return (
     <main className="unit-stage">
+      <ThemeToggle />
       <h1 className="sr-only">DBX 286s mic preamp / processor</h1>
       <div className="rack-scroll" role="region" aria-label="DBX286S front panel" tabIndex={0}>
         <div className="rack" data-bypassed={settings.bypass}>

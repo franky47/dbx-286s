@@ -73,11 +73,19 @@ For example, `/?ingain=42&48v=on&hp=on&deessfreq=6400&outgain=0.5` loads those s
 
 ## Component source
 
-The app copies audiocn source directly, without the registry namespace:
+The app uses local copies of components from the `@audiocn` shadcn registry. `components.json` maps `@audiocn` to `https://www.audiocn.dev/r/{name}.json`.
 
-- [knob.json](https://www.audiocn.dev/r/knob.json) supplies `src/components/ui/knob.tsx`.
-- [use-audio-config.json](https://www.audiocn.dev/r/use-audio-config.json) and [use-audio-context.json](https://www.audiocn.dev/r/use-audio-context.json) supply the hooks in `src/hooks/`.
-- [core.json](https://www.audiocn.dev/r/core.json) supplies the four supporting files in `src/lib/audio/`.
+- [`@audiocn/knob`](https://www.audiocn.dev/r/knob.json) supplies `src/components/ui/knob.tsx`.
+- [`@audiocn/use-audio-config`](https://www.audiocn.dev/r/use-audio-config.json) and [`@audiocn/use-audio-context`](https://www.audiocn.dev/r/use-audio-context.json) supply the hooks in `src/hooks/`.
+- [`@audiocn/core`](https://www.audiocn.dev/r/core.json) supplies the four supporting files in `src/lib/audio/`.
+
+Inspect the registry sources without changing the local files:
+
+```sh
+pnpm exec shadcn view @audiocn/knob @audiocn/use-audio-config @audiocn/use-audio-context @audiocn/core
+```
+
+Do not overwrite the local files without checking the app's changes below.
 
 The app formats the copied files with Oxfmt. The local `Knob` adds an optional `taper` prop for custom value-to-angle mapping. `PanelKnob` in `src/App.tsx` composes audiocn's `KnobDial`, `KnobLabel`, and `KnobValue` with a custom SVG cap and `UnitScale`. `PanelKnob` uses positions 1 through 41 internally and maps them to control values for state, typed input, readouts, and accessible slider values. Click sounds remain off.
 

@@ -1,9 +1,11 @@
-import { useId, useState } from 'react'
+import { useId } from 'react'
+import { useQueryStates } from 'nuqs'
 import type { CSSProperties } from 'react'
 import { Knob, KnobDial, KnobLabel, KnobValue, parseKnobValue } from '@/components/ui/knob'
 import { UnitFace } from '@/components/unit-face'
 import { controls, defaultSettings, formatValue } from '@/lib/controls'
 import { graduationTaper } from '@/lib/graduations'
+import { settingsParsers, settingsUrlKeys } from '@/lib/query-state'
 import { UnitScale } from '@/components/unit-scale'
 import type { ControlId, SwitchId } from '@/lib/controls'
 import './App.css'
@@ -184,12 +186,12 @@ function Meter({
 }
 
 function App() {
-  const [settings, setSettings] = useState(defaultSettings)
+  const [settings, setSettings] = useQueryStates(settingsParsers, { urlKeys: settingsUrlKeys })
   function changeControl(id: ControlId, value: number) {
-    setSettings((current) => ({ ...current, values: { ...current.values, [id]: value } }))
+    void setSettings({ [id]: value })
   }
   function toggle(id: SwitchId) {
-    setSettings((current) => ({ ...current, [id]: !current[id] }))
+    void setSettings((current) => ({ [id]: !current[id] }))
   }
   return (
     <main className="unit-stage">
@@ -201,7 +203,7 @@ function App() {
             <PanelKnob
               key={id}
               id={id}
-              value={settings.values[id]}
+              value={settings[id]}
               onChange={(value) => changeControl(id, value)}
             />
           ))}

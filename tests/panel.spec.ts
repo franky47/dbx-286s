@@ -19,7 +19,7 @@ test('knobs support keys, bounds, direct entry and reset', async ({ page }) => {
   const gain = page.getByRole('slider', { name: 'Mic gain', exact: true })
   await gain.focus()
   await gain.press('ArrowUp')
-  await expect(gain).toHaveAttribute('aria-valuenow', '36')
+  await expect(gain).toHaveAttribute('aria-valuenow', '58.5')
   await gain.press('End')
   await expect(gain).toHaveAttribute('aria-valuenow', '60')
   await gain.press('Home')
@@ -29,7 +29,7 @@ test('knobs support keys, bounds, direct entry and reset', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Value', exact: true }).press('Enter')
   await expect(gain).toHaveAttribute('aria-valuenow', '42')
   await gain.dblclick()
-  await expect(gain).toHaveAttribute('aria-valuenow', '34.5')
+  await expect(gain).toHaveAttribute('aria-valuenow', '57')
 })
 
 test('input gain dragging and fine keys stay on fixed positions', async ({ page }) => {
@@ -37,11 +37,11 @@ test('input gain dragging and fine keys stay on fixed positions', async ({ page 
   const box = (await gain.boundingBox())!
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2)
   await page.mouse.down()
-  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2 - 20, { steps: 4 })
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2 + 20, { steps: 4 })
   await page.mouse.up()
-  await expect(gain).toHaveAttribute('aria-valuenow', '40.5')
+  await expect(gain).toHaveAttribute('aria-valuenow', '51')
   await gain.press('Alt+ArrowUp')
-  await expect(gain).toHaveAttribute('aria-valuenow', '42')
+  await expect(gain).toHaveAttribute('aria-valuenow', '52.5')
 })
 
 test('frequency input understands kHz and Escape cancels', async ({ page }) => {
@@ -67,11 +67,11 @@ test('switches update state and bypass keeps knob settings', async ({ page }) =>
   await expect(phantom).toHaveAttribute('aria-pressed', 'true')
   const filter = page.getByRole('button', { name: '80 Hz high-pass filter' })
   await filter.click()
-  await expect(filter).toHaveAttribute('aria-pressed', 'false')
+  await expect(filter).toHaveAttribute('aria-pressed', 'true')
   await bypass.click()
   await expect(page.getByRole('slider', { name: 'Drive', exact: true })).toHaveAttribute(
     'aria-valuenow',
-    '3',
+    '3.5',
   )
 })
 
@@ -107,7 +107,7 @@ test('bypass dims processor labels, units and meters without dimming section gro
       await page.getByRole('slider', { name: 'Drive', exact: true }).press('ArrowUp')
       await expect(page.getByRole('slider', { name: 'Drive', exact: true })).toHaveAttribute(
         'aria-valuenow',
-        '3.25',
+        '3.75',
       )
     }
   }
@@ -121,6 +121,6 @@ test('mobile keeps the rack inside a scroll area and output is reachable', async
   const output = page.getByRole('slider', { name: 'Output gain', exact: true })
   await output.focus()
   await output.press('ArrowUp')
-  await expect(output).toHaveAttribute('aria-valuenow', '0.5')
+  await expect(output).toHaveAttribute('aria-valuenow', '2.5')
   await expect(output).toBeInViewport()
 })

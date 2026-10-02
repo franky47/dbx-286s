@@ -33,8 +33,8 @@ test('typed gain snaps to a position and reset restores a valid position', async
     await expect(gain).toHaveAttribute('aria-valuenow', expected)
   }
   await gain.dblclick()
-  await expect(gain).toHaveAttribute('aria-valuenow', '34.5')
-  await expect(gain).toHaveAttribute('aria-valuetext', '+34.5 dB')
+  await expect(gain).toHaveAttribute('aria-valuenow', '57')
+  await expect(gain).toHaveAttribute('aria-valuetext', '+57.0 dB')
 })
 
 test('fine drag and wheel cannot select values between gain positions', async ({ page }) => {

@@ -22,19 +22,19 @@ export type SwitchId = Exclude<keyof Settings, 'values'>
 
 export const defaultSettings: Settings = {
   values: {
-    gain: 34.5,
-    drive: 3,
-    density: 4,
-    frequency: 4400,
-    deEss: 5,
-    low: 2,
-    high: 3,
-    threshold: -36,
-    ratio: 2,
-    output: 0,
+    gain: 57,
+    drive: 3.5,
+    density: 5.25,
+    frequency: 7200,
+    deEss: 2.5,
+    low: 3,
+    high: 2.25,
+    threshold: -45,
+    ratio: 1.3,
+    output: 2,
   },
   phantom: false,
-  highPass: true,
+  highPass: false,
   bypass: false,
 }
 

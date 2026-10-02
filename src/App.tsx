@@ -37,7 +37,15 @@ function DialCap() {
         </linearGradient>
       </defs>
       <circle cx="50" cy="52" r="29" fill="#000" opacity=".25" />
-      <circle cx="50" cy="50" r="29" fill="#22261e" stroke="#73786a" strokeWidth="1.2" />
+      <circle
+        className="dial-edge"
+        cx="50"
+        cy="50"
+        r="29"
+        fill="#22261e"
+        stroke="#73786a"
+        strokeWidth="1.2"
+      />
       <circle cx="50" cy="50" r="25" fill={`url(#${id})`} stroke="#151911" strokeWidth="1" />
       <circle
         cx="50"

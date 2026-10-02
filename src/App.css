@@ -105,8 +105,11 @@
   filter: brightness(1.08);
 }
 .panel-knob [data-slot='knob-dial']:focus-visible {
-  outline: 1px solid #9d3020;
-  outline-offset: 2px;
+  outline: none;
+}
+.panel-knob [data-slot='knob-dial']:focus-visible .dial-edge {
+  stroke: #9d3020;
+  stroke-width: 2.4;
 }
 .unit-scale line {
   stroke: #3c4233;

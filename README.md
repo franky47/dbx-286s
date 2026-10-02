@@ -16,7 +16,7 @@ pnpm dev
 ## Use the controls
 
 - Drag a knob up or down. Hold Shift to slow the drag.
-- Tab to a knob, then use arrow keys or the mouse wheel.
+- Tab to a knob, then use arrow keys or the mouse wheel. Keyboard focus turns the knob's edge red and doubles its width.
 - Use Home and End for the limits. Arrows, Alt+arrow, and the wheel move one position. Shift+arrow and Page Up/Down move ten positions.
 - Hover or focus a knob to see its value. Each readout and value editor fits that control's widest value with 6px side padding. Text aligns to the right, so units stay in place as values change. Press Enter on the knob or double-click its value to type a number. Enter applies it; Escape cancels.
 - Double-click a dial or Alt+click to restore its starting value.

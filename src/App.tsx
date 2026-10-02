@@ -8,6 +8,8 @@ import { UnitScale } from '@/components/unit-scale'
 import type { ControlId, SwitchId } from '@/lib/controls'
 import './App.css'
 
+const KNOB_POSITIONS = 41
+
 const positions: Record<ControlId, number> = {
   gain: 228,
   drive: 641,
@@ -74,28 +76,39 @@ function PanelKnob({
   onChange: (value: number) => void
 }) {
   const control = controls[id]
+  const taper = graduationTaper(id)
+  const toPosition = (next: number) => 1 + taper.toPosition(next) * (KNOB_POSITIONS - 1)
+  const toValue = (position: number) =>
+    Number(taper.toValue((position - 1) / (KNOB_POSITIONS - 1)).toFixed(6))
+  const position = Math.round(toPosition(value))
   const processor = !['gain', 'output'].includes(id)
   return (
     <Knob
       className={`panel-knob ${processor ? 'processor-knob' : ''}`}
       style={{ left: `${(positions[id] - 50) / 19.8}%` }}
-      min={control.min}
-      max={control.max}
-      step={control.step}
-      fineStep={control.step / 10}
-      largeStep={control.step * 10}
-      value={value}
-      resetValue={defaultSettings.values[id]}
+      min={1}
+      max={KNOB_POSITIONS}
+      step={1}
+      fineStep={1}
+      largeStep={10}
+      value={position}
+      resetValue={Math.round(toPosition(defaultSettings.values[id]))}
       arc={300}
-      taper={graduationTaper(id)}
-      origin={id === 'output' ? 0 : control.min}
-      format={(next) => formatValue(id, next)}
-      parse={(text) => parseValue(id, text)}
-      onValueChange={onChange}
+      origin={toPosition(id === 'output' ? 0 : control.min)}
+      format={(next) => formatValue(id, toValue(next))}
+      parse={(text) => {
+        const parsed = parseValue(id, text)
+        return parsed === null ? null : toPosition(parsed)
+      }}
+      onValueChange={(next) => onChange(toValue(next))}
       allowWheel
     >
       <KnobLabel className="sr-only">{control.label}</KnobLabel>
-      <KnobDial>
+      <KnobDial
+        aria-valuemin={control.min}
+        aria-valuemax={control.max}
+        aria-valuenow={toValue(position)}
+      >
         <UnitScale id={id} />
         <DialCap />
       </KnobDial>

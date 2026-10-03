@@ -1,13 +1,12 @@
 import { useId } from 'react'
-import { useQueryStates } from 'nuqs'
 import type { CSSProperties } from 'react'
 import { Knob, KnobDial, KnobLabel, KnobValue, parseKnobValue } from '@/components/ui/knob'
 import { UnitFace } from '@/components/unit-face'
-import { controls, defaultSettings, formatValue } from '@/lib/controls'
+import { controls, formatValue } from '@/lib/controls'
 import { graduationTaper } from '@/lib/graduations'
-import { settingsParsers, settingsUrlKeys } from '@/lib/query-state'
+import { usePreset } from '@/hooks/use-preset'
+import { PresetHeader } from '@/components/preset-header'
 import { UnitScale } from '@/components/unit-scale'
-import { ThemeToggle } from '@/components/theme-toggle'
 import type { ControlId, SwitchId } from '@/lib/controls'
 import './App.css'
 
@@ -80,10 +79,12 @@ function parseValue(id: ControlId, text: string) {
 function PanelKnob({
   id,
   value,
+  defaultValue,
   onChange,
 }: {
   id: ControlId
   value: number
+  defaultValue: number
   onChange: (value: number) => void
 }) {
   const control = controls[id]
@@ -103,7 +104,7 @@ function PanelKnob({
       fineStep={1}
       largeStep={10}
       value={position}
-      resetValue={Math.round(toPosition(defaultSettings.values[id]))}
+      resetValue={Math.round(toPosition(defaultValue))}
       arc={300}
       origin={toPosition(id === 'output' ? 0 : control.min)}
       format={(next) => formatValue(id, toValue(next))}
@@ -111,7 +112,9 @@ function PanelKnob({
         const parsed = parseValue(id, text)
         return parsed === null ? null : toPosition(parsed)
       }}
-      onValueChange={(next) => onChange(toValue(next))}
+      onValueChange={(next, details) =>
+        onChange(details.reason === 'reset' ? defaultValue : toValue(next))
+      }
       allowWheel
     >
       <KnobLabel className="sr-only">{control.label}</KnobLabel>
@@ -195,7 +198,8 @@ function Meter({
 }
 
 function App() {
-  const [settings, setSettings] = useQueryStates(settingsParsers, { urlKeys: settingsUrlKeys })
+  const { settings, setSettings, defaults, modified, error, saveDefaults, reset, createPermalink } =
+    usePreset()
   function changeControl(id: ControlId, value: number) {
     void setSettings({ [id]: value })
   }
@@ -204,7 +208,13 @@ function App() {
   }
   return (
     <main className="unit-stage">
-      <ThemeToggle />
+      <PresetHeader
+        createPermalink={createPermalink}
+        modified={modified}
+        error={error}
+        onSave={saveDefaults}
+        onReset={reset}
+      />
       <h1 className="sr-only">DBX 286s mic preamp / processor</h1>
       <div className="rack-scroll" role="region" aria-label="DBX286S front panel">
         <div className="rack" data-bypassed={settings.bypass}>
@@ -214,6 +224,7 @@ function App() {
               key={id}
               id={id}
               value={settings[id]}
+              defaultValue={defaults[id]}
               onChange={(value) => changeControl(id, value)}
             />
           ))}

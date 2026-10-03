@@ -974,7 +974,7 @@ const useKnobValue = ({
   const change = useCallback(
     (next: number, details: KnobChangeDetails) => {
       const previous = latestRef.current
-      if (next === previous) {
+      if (next === previous && details.reason !== 'reset') {
         return
       }
       latestRef.current = next

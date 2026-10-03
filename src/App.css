@@ -290,6 +290,6 @@
 
 @media (max-width: 800px) {
   .unit-stage {
-    padding: 12px;
+    padding: 100px 12px 12px;
   }
 }

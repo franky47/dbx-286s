@@ -20,24 +20,22 @@ export function ThemeToggle() {
   const Icon = themes.find((option) => option.value === theme)?.icon ?? MonitorIcon
 
   return (
-    <div className="fixed top-3 right-3 z-10 min-[801px]:top-6 min-[801px]:right-6">
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          render={<Button variant="ghost" size="icon-lg" aria-label="Choose theme" />}
-        >
-          <Icon aria-hidden="true" />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
-            {themes.map(({ value, label, icon: OptionIcon }) => (
-              <DropdownMenuRadioItem key={value} value={value} closeOnClick>
-                <OptionIcon aria-hidden="true" />
-                {label}
-              </DropdownMenuRadioItem>
-            ))}
-          </DropdownMenuRadioGroup>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={<Button variant="ghost" size="icon-lg" aria-label="Choose theme" />}
+      >
+        <Icon aria-hidden="true" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
+          {themes.map(({ value, label, icon: OptionIcon }) => (
+            <DropdownMenuRadioItem key={value} value={value} closeOnClick>
+              <OptionIcon aria-hidden="true" />
+              {label}
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

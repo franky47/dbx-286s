@@ -19,6 +19,7 @@ type Settings = {
   bypass: boolean
 }
 export type SwitchId = Exclude<keyof Settings, 'values'>
+export type Preset = Record<ControlId, number> & Record<SwitchId, boolean>
 
 export const defaultSettings: Settings = {
   values: {

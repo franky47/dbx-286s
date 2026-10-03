@@ -3,6 +3,8 @@ import { expect, test } from '@playwright/test'
 test('keyboard focus turns the knob edge red at twice its normal width', async ({ page }) => {
   await page.goto('/')
   await page.keyboard.press('Tab')
+  await expect(page.getByRole('button', { name: 'Copy permalink' })).toBeFocused()
+  await page.keyboard.press('Tab')
   await expect(page.getByRole('button', { name: 'Choose theme' })).toBeFocused()
 
   for (const dial of await page.getByRole('slider').all()) {
